@@ -48,7 +48,9 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{asset('images/admin.jpg')}}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">adm</span>
+                            @if(Auth::check())
+                            <span class="hidden-xs">{{Auth::user()->name}}</span>
+                            @endif
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -64,7 +66,7 @@
                                     <a href="#" class="btn btn-default btn-flat">Đổi mật khẩu</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="<?php //echo site_url('login/logout') ?>" class="btn btn-default btn-flat">Đăng xuất</a>
+                                    <a href="logout" class="btn btn-default btn-flat">Đăng xuất</a>
                                 </div>
                             </li>
                         </ul>

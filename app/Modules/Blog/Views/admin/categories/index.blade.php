@@ -6,7 +6,16 @@
             <div class="main-content">
             <h2><?php //$msg->display(); ?></h2>
 	            <div class="col-md-3">
-
+				@if(isset($mess))
+					<div class="alert alert-success" role="alert">
+						{{$mess}}
+					</div>
+				@endif        
+	            @if(session('thongbao'))
+					<div class="alert alert-success" role="alert">
+						{{session('thongbao')}}
+					</div>
+				@endif 
 	            <a href="admin/categories/add" title="" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>  Add Categories</a> 
 	            <a href="admin/categories/list" title="" class="btn btn-primary">View All</a> 
 	            </div>
@@ -14,16 +23,7 @@
 	            	<button type="button" id="btnSearch" id="btnSearch" class="btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></button>
 	            	<input class="form-control pull-right" style="width: 300px;" type="text" name="txtSearch" id="txtSearch" placeholder="Nhập từ khóa" value="<?php //echo $keyword; ?>">
 	            </div>
-		            @if(isset($mess))
-							<div class="alert alert-success" role="alert">
-								{{$mess}}
-							</div>
-					@endif        
-	            @if(session('thongbao'))
-						<div class="alert alert-success" role="alert">
-							{{session('thongbao')}}
-						</div>
-					@endif 
+		           
 				<table class="table table-hover">
 					<thead>
 						<tr>
