@@ -4,18 +4,19 @@
     <div class="row">
         <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="main-content">
-            <h2><?php //$msg->display(); ?></h2>
+	            <h2>
+	            	@if(session('mess'))
+						<div class="alert alert-warning" role="alert">
+							{{session('mess')}}
+						</div>
+					@endif        
+		            @if(session('thongbao'))
+						<div class="alert alert-success" role="alert">
+							{{session('thongbao')}}
+						</div>
+					@endif
+				</h2>
 	            <div class="col-md-3">
-				@if(isset($mess))
-					<div class="alert alert-success" role="alert">
-						{{$mess}}
-					</div>
-				@endif        
-	            @if(session('thongbao'))
-					<div class="alert alert-success" role="alert">
-						{{session('thongbao')}}
-					</div>
-				@endif 
 	            <a href="admin/categories/add" title="" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>  Add Categories</a> 
 	            <a href="admin/categories/list" title="" class="btn btn-primary">View All</a> 
 	            </div>
