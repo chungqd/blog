@@ -24,17 +24,17 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li <?php //echo ($module == 'dashboard') ? 'class="active"' : ''; ?>>
-                <a href="#"><i class="fa fa-home"></i>Trang chủ</a>
+            <li>
+                <a href="home"><i class="fa fa-home"></i>Trang chủ</a>
             </li>
-            <li <?php //echo ($module == 'product') ? 'class="active"' : ''; ?>>
-                <a href="#"><i class="fa fa-book"></i>Quản lý bài viết</a>
+            <li>
+                <a href="admin/post/list"><i class="fa fa-book"></i>Quản lý bài viết</a>
             </li>
-            <li <?php //echo ($module == 'brands') ? 'class="active"' : ''; ?>>
-                <a href="#"><i class="fa fa-th"></i>Quản lý chuyên mục</a>
+            <li>
+                <a href="admin/categories/list"><i class="fa fa-th"></i>Quản lý chuyên mục</a>
             </li>
-            <li <?php //echo ($module == 'member') ? 'class="active"' : ''; ?>>
-                <a href="#"><i class="fa fa-th"></i>Thành viên</a>
+            <li>
+                <a href="admin/user/list"><i class="fa fa-th"></i>Quản lý thành viên</a>
             </li>
         </ul>
     </section>

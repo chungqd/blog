@@ -17,9 +17,9 @@
             <div class="box-header">
                 <h2>Đăng nhập</h2>
             </div>
-            @if(session('thongbao'))
+            @if(session('error'))
                 <div class="alert alert-warning" role="alert">
-                    {{session('thongbao')}}
+                    {{session('error')}}
                 </div>
             @endif
             <label for="username">Tên đăng nhập</label>
