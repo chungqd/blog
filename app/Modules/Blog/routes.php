@@ -38,7 +38,10 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
             Route::get('add', 'PostController@getAdd');
             Route::post('add', 'PostController@postAdd');
 
-            Route::get('edit', 'PostController@edit');
+            Route::get('edit/{id}', 'PostController@getEdit');
+            Route::post('edit/{id}', 'PostController@postEdit');
+
+            Route::get('delete/{id}', 'PostController@delete');
         });
     });
 });

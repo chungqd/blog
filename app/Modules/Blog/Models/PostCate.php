@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class PostCate extends Model
 {
     protected $table = 'post_cates';
+    public $timestamps = false;
 }

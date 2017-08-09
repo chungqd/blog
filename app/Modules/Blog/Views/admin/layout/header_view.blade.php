@@ -24,6 +24,8 @@
     <script src="{{asset('js/admin1.js')}}"></script>
     <script src="{{asset('js/formValidation.min1.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/formValidation.min2.js')}}" type="text/javascript"></script>
+    <!-- CKEditor -->
+    <script src="ckeditor/ckeditor.js"></script>
 </head>
 <?php ob_flush(); // xóa đi dữ liệu tạm thời ?>
 <body class="hold-transition skin-blue sidebar-mini">

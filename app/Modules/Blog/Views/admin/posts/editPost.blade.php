@@ -1,67 +1,156 @@
 @extends('Blog::admin.layout.index')
 @section('content')
-<div class="content-wrapper right_col">
-    <div class="row">
-        <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="main-content">
-            <h2><?php //$msg->display(); ?></h2>
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-					<h2 class="text-center">Edit Categories</h2>
-					@if(session('mess'))
-						<div class="alert alert-success" role="alert">
-							{{session('mess')}}
-						</div>
-					@endif
-					<a href="admin/user/list" title="" class="btn btn-primary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
-					
-						<form action="admin/user/edit/{{$user->id}}" method="post" enctype="multipart/form-data">
-						{{csrf_field()}} 
-						  	<div class="form-group">
-							    <label for="txtName">Tên tài khoản</label>
-							    <input type="text" class="form-control" name="txtName" id="txtName" placeholder="Tên thành viên" value="{{$user->name}}">
-							    <input type="hidden" name="hddNameTB" value="{{$user->name}}">
-							</div>
+<style type="text/css" media="screen">
+.checkbox {
+    padding-left: 20px; }
+.checkbox label {
+    display: inline-block;
+    position: relative;
+    padding-left: 5px; }
+.checkbox label::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: 0;
+    margin-left: -20px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background-color: #fff;
+    -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    transition: border 0.15s ease-in-out, color 0.15s ease-in-out; }
+.checkbox label::after {
+    display: inline-block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 0;
+    top: 0;
+    margin-left: -20px;
+    padding-left: 3px;
+    padding-top: 1px;
+    font-size: 11px;
+    color: #555555; }
+.checkbox input[type="checkbox"] {
+    opacity: 0; }
+.checkbox input[type="checkbox"]:focus + label::before {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px; }
+.checkbox input[type="checkbox"]:checked + label::after {
+    font-family: 'FontAwesome';
+    content: "\f00c"; }
+.checkbox input[type="checkbox"]:disabled + label {
+    opacity: 0.65; }
+.checkbox input[type="checkbox"]:disabled + label::before {
+    background-color: #eeeeee;
+    cursor: not-allowed; }
+.checkbox.checkbox-circle label::before {
+    border-radius: 50%; }
+.checkbox.checkbox-inline {
+    margin-top: 0; }
 
-						 	<div class="form-group">
-							    <label for="txtEmail">Email</label>
-							    <input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="Địa chỉ email" value="{{$user->email}}">
-						  	</div>
+.checkbox-success input[type="checkbox"]:checked + label::before {
+    background-color: #5cb85c;
+    border-color: #5cb85c; }
+.checkbox-success input[type="checkbox"]:checked + label::after {
+    color: #fff; }
+.checkbox-info input[type="checkbox"]:checked + label::before {
+    background-color: #5bc0de;
+    border-color: #5bc0de; }
+.checkbox-info input[type="checkbox"]:checked + label::after {
+    color: #fff; }
+</style>
+    <div class="content-wrapper right_col">
+        <div class="row">
+            <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="main-content">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h2 class="text-center">Edit Post</h2>
+                            @if(count($errors) > 0)
+                                <div class="alert alert-danger" role="alert">
+                                    @foreach ($errors->all() as $error)
+                                        <strong>Warning!</strong> {{$error}} <br>
+                                    @endforeach
+                                </div>
+                            @endif
+                            <a href="admin/post/list" title="" class="btn btn-primary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+                            @if(session('thongbao'))
+                                <div class="alert alert-success" role="alert">
+                                    <strong>Well done!</strong> {{session('thongbao')}}
+                                </div>
+                            @endif
+                            <form action="admin/post/edit/{{$post->id}}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
 
-							<div class="form-group">
-								<input type="checkbox" name="changePass" id="changePass">
-								<label for="txtPassword">Đổi mật khẩu</label>
-								<input type="password" class="form-control password" name="txtPassword" id="txtPassword" placeholder="Nhập mật khẩu" disabled="">
-							</div>
+                                <div class="form-group">
+                                    <label for="title">Tiêu đề</label>
+                                    <input type="text" class="form-control" name="tieude" id="title" value="{{$post->tieude}}">
+                                </div>
 
-						  	<div class="form-group">
-							    <label for="slcRole">Chọn quyền</label>
-							    <select name="slcRole" class="form-control"> 
-							    	<option {{$user->quyen == 1 ? 'selected' : ''}} value="1" >Admin</option> 
-							    	<option {{$user->quyen == 0 ? 'selected' : ''}} value="0">Member</option> 
-							    </select>
-						  	</div>
-						  <button name="btnSubmit" type="submit" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true" ></i> Sửa</button>
-						</form>
-					</div>
-				</div>
+                                <div class="form-group">
+                                    <label for="tomtat">Tóm tắt</label>
+                                    <input type="text" class="form-control" name="tomtat" id="tomtat" value="{{$post->tomtat}}">
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="noidung">Nội dung</label>
+                                    <textarea name="noidung" id="noidung" rows="10" cols="80">
+                                        {{$post->noidung}}
+                                    </textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="slcRole">Chọn chuyên mục</label><br>
+                                    <div class="row" style="padding-left: 50px;">
+                                        @foreach($categories as $category)
+                                            @if(($category->id)%2 == 0)
+                                                <div class="col-md-6 checkbox checkbox-info">
+                                                    <input id="checkbox{{$category->id}}"
+                                                        @foreach($post->categories as $catePost)
+                                                            {{$category->id == $catePost->id? "checked" : ""}} 
+                                                        @endforeach
+                                                    name="category[]" type="checkbox" value="{{$category->id}}">
+                                                    <label for="checkbox{{$category->id}}">
+                                                        {{$category->ten}}
+                                                    </label>
+                                                </div>
+                                            @else
+                                                <div class="col-md-6 checkbox checkbox-info">
+                                                    <input id="checkbox{{$category->id}}"
+                                                        @foreach($post->categories as $catePost)
+                                                            {{$category->id == $catePost->id? "checked" : ""}} 
+                                                        @endforeach
+                                                    name="category[]" type="checkbox" value="{{$category->id}}">
+                                                    <label for="checkbox{{$category->id}}">
+                                                        {{$category->ten}}
+                                                    </label>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="file">Chọn hình</label>
+                                    <input type="file" id="file" name="file" accept="image/*">
+                                    <br/>
+                                    <img src="uploads/{{$post->HinhAnh}}" alt="" width="150" height="150">
+                                </div>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true" ></i> Thêm</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#changePass").change(function() {
-            if($(this).is(":checked"))
-            {
-                $(".password").removeAttr('disabled');
-            }
-            else
-            {
-                $(".password").attr('disabled', '');
-            }
-        });
-    });
-</script>
+    <script>
+        // Replace the <textarea id="noidung"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace( 'noidung' );
+    </script>
 @endsection

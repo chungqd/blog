@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $table = 'posts';
+    public $timestamps = true;
 
     public function categories()
     {
-    	return $this->belongsToMany('App\Modules\Blog\Models\Categories', 'post_cates', 'cate_id', 'post_id');
+    	return $this->belongsToMany('App\Modules\Blog\Models\Categories', 'post_cates', 'post_id', 'cate_id');
     }
 
     public function users()

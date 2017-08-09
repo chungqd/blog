@@ -41,7 +41,6 @@ class UserController extends Controller {
             'txtName.required'     => 'Bạn chưa nhập tên chuyên mục',
             'txtName.max'          => 'Tên chuyên mục phải có độ dài 3 - 100 kí tự',
             'txtName.min'          => 'Tên chuyên mục phải có độ dài 3 - 100 kí tự',
-            'txtName.unique'       => 'Đã tồn tại tên',
             'txtEmail.required'    => 'Trường email còn trống',
             'txtEmail.unique'      => 'Đã tồn tại email',
             'txtEmail.email'       => 'Không đúng định dạng email',
@@ -52,16 +51,16 @@ class UserController extends Controller {
             're-password.same'     => 'Mật khẩu nhập lại không trùng',
         ];
         $rules = [
-            'txtName'     => 'required|unique:users,name|min:3|max:100',
+            'txtName'     => 'required|min:3|max:100',
             'txtEmail'    => 'required|unique:users,email|email',
             'txtPassword' => 'required|min:1|max:60',
             're-password' => 'required|same:txtPassword',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator    ->fails()) {
+        if ($validator->fails()) {
             return redirect()->back()
-                             ->withErrors($validator)
-                             ->withInput();
+                        ->withErrors($validator)
+                        ->withInput();
         }
 
         $user           = new User;
@@ -112,10 +111,10 @@ class UserController extends Controller {
             'txtName' => 'required|min:3|max:100',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator    ->fails()) {
+        if ($validator->fails()) {
             return redirect()->back()
-                             ->withErrors($validator)
-                             ->withInput();
+                        ->withErrors($validator)
+                        ->withInput();
         }
 
         DB::beginTransaction();
