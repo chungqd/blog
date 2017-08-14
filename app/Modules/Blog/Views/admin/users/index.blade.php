@@ -20,6 +20,10 @@
                 <a href="admin/user/add" title="" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>  Add Member</a>
                 <a href="admin/user/list" title="" class="btn btn-primary">View All</a>
                 </div>
+                <div class="col-md-9">
+                   <button type="button" id="btnSearch" id="btnSearch" class="btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></button>
+                  <input class="form-control pull-right" style="width: 300px;" type="text" name="txtSearch" id="txtSearch" placeholder="Nhập từ khóa">
+                </div>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -60,5 +64,12 @@
             window.location.href = "admin/user/delete/"+id;
         }
     }
+
+    $(document).ready(function() {
+        $("#btnSearch").click(function(){
+            var keyword = $.trim($("#txtSearch").val());
+            window.location.href = "admin/user/search/"+keyword;
+        });
+    });
 </script>
 @endsection

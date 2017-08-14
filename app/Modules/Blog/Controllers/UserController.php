@@ -201,4 +201,16 @@ class UserController extends Controller {
         Auth::logout();
         return redirect('home');
     }
+
+    /**
+     * search post
+     * 
+     * @param  Request $request 
+     * @return view
+     */
+    public function search($keyword)
+    {
+        $user = User::where('name', 'like', "%$keyword%")->orWhere('email', 'like', "%$keyword%")->simplePaginate(5);
+        return view('Blog::admin.users.index', ['user'=>$user]);
+    }
 }

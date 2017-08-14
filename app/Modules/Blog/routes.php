@@ -32,6 +32,8 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
             Route::post('edit/{id}', 'UserController@postEdit');
 
             Route::get('delete/{id}', 'UserController@delete');
+
+            Route::get('search/{keyword}', 'UserController@search');
         });
 
 
@@ -45,6 +47,8 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
             Route::post('edit/{id}', 'CategoriController@postEdit');
 
             Route::get('delete/{id}', 'CategoriController@delete');
+
+            Route::get('search/{keyword}', 'CategoriController@search');
         });
     
         Route::group(['prefix' => 'post'], function() {
@@ -57,6 +61,8 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
             Route::post('edit/{id}', 'PostController@postEdit');
 
             Route::get('delete/{id}', 'PostController@delete');
+
+            Route::get('search/{keyword}', 'PostController@search');
         });
     });
 });

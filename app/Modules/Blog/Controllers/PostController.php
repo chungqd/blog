@@ -245,4 +245,16 @@ class PostController extends Controller
             return redirect('admin/post/list')->with('mess', "Không tồn tại bài viết cần xóa");
         }
     }
+
+    /**
+     * search post
+     * 
+     * @param  Request $request 
+     * @return view
+     */
+    public function search($keyword)
+    {
+        $posts = Post::where('tieude', 'like', "%$keyword%")->simplePaginate(5);
+        return view('Blog::admin.posts.index', ['posts'=>$posts]);
+    }
 }
