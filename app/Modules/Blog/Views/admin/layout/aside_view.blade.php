@@ -30,12 +30,14 @@
             <li>
                 <a href="admin/post/list"><i class="fa fa-book"></i>Quản lý bài viết</a>
             </li>
-            <li>
-                <a href="admin/categories/list"><i class="fa fa-th"></i>Quản lý chuyên mục</a>
-            </li>
-            <li>
-                <a href="admin/user/list"><i class="fa fa-th"></i>Quản lý thành viên</a>
-            </li>
+            @if(Auth::user()->quyen == 1)
+                <li>
+                    <a href="admin/categories/list"><i class="fa fa-th"></i>Quản lý chuyên mục</a>
+                </li>
+                <li>
+                    <a href="admin/user/list"><i class="fa fa-th"></i>Quản lý thành viên</a>
+                </li>
+            @endif
         </ul>
     </section>
     <!-- /.sidebar -->

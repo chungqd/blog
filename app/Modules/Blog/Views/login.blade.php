@@ -17,10 +17,19 @@
             <div class="box-header">
                 <h2>Đăng nhập</h2>
             </div>
-            @if(session('error'))
-                <div class="alert alert-warning" role="alert">
-                    {{session('error')}}
+            @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul style="list-style: none;">
+                        @foreach ($errors->all() as $error)
+                            <li style="color: red;">{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
+            @endif
+            @if(session('error'))
+                <ul style="list-style: none;">
+                        <li style="color: red;">{{session('error') }}</li>
+                </ul>
             @endif
             <label for="username">Tên đăng nhập</label>
             <br/>

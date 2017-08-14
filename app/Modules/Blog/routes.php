@@ -4,11 +4,25 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
     Route::get('login', "UserController@getLogin");
     Route::post('login', "UserController@postLogin");
     Route::get('logout', "UserController@logout");
+    Route::get('home', 'HomeController@index');
+    Route::get('contact', 'HomeController@contact');
+    Route::get('about', 'HomeController@about');
+    Route::get('category/{id}/{TenKhongDau}.html', 'HomeController@category');
+    Route::get('detail/{id}/{TenKhongDau}.html', 'HomeController@detail');
+    Route::get('user', 'HomeController@getUser')->middleware('checklogin');
+    Route::post('user', 'HomeController@postUser');
+    Route::get('register', 'HomeController@getRegister');
+    Route::post('register', 'HomeController@postRegister');
+
+    Route::post('search', 'HomeController@search');
+
 
     Route::group(['prefix' => 'admin' ,'middleware' => 'checklogin'], function (){
-        Route::get('home', 'HomeController@HomeView');
+        Route::get('home', function(){
+            return view('Blog::admin.home');
+        });
 
-        Route::group(['prefix' => 'user'], function() {
+        Route::group(['prefix' => 'user','middleware' => 'policies'], function() {
             Route::get('list', 'UserController@index')->name('ds_user');
 
             Route::get('add', 'UserController@getAdd');
@@ -20,7 +34,8 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
             Route::get('delete/{id}', 'UserController@delete');
         });
 
-        Route::group(['prefix' => 'categories'], function() {
+
+        Route::group(['prefix' => 'categories','middleware' => 'policies'], function() {
             Route::get('list', 'CategoriController@index');
 
             Route::get('add', 'CategoriController@getAdd');

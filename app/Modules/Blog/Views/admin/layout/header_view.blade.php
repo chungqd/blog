@@ -64,9 +64,6 @@
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Đổi mật khẩu</a>
-                                </div>
                                 <div class="pull-right">
                                     <a href="logout" class="btn btn-default btn-flat">Đăng xuất</a>
                                 </div>

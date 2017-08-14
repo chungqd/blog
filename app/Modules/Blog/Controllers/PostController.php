@@ -39,8 +39,8 @@ class PostController extends Controller
      */
     public function getAdd()
     {
-    	$categories = Categories::all();
-    	return view('Blog::admin.posts.addPost', ['categories' => $categories]);
+        $categories = Categories::all();
+        return view('Blog::admin.posts.addPost', ['categories' => $categories]);
     }
 
     /**

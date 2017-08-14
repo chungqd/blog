@@ -146,4 +146,13 @@ class CategoriController extends Controller
         $categories->delete();
         return redirect('admin/categories/list')->with('thongbao', "Xóa thành công");
     }
+
+    public function search($keyword)
+    {
+        $categories = Categories::where('ten', 'like', "%$keyword%")->simplePaginate(5);
+        if ($categories) {
+            return view('Blog::admin.categories.list', ['categories'=>$categories]);
+        }
+        return view('errors.403');
+    }
 }

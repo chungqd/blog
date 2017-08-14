@@ -176,9 +176,17 @@ class UserController extends Controller {
      * @return view
      */
     public function postLogin(Request $request) {
+        $this->validate($request, [
+                'txtTenDangNhap' => 'required',
+                'txtMatKhau' => 'required',
+            ],
+            [
+                'txtTenDangNhap.required' => 'Tên đăng nhập không được để trống',
+                'txtMatKhau.required' => 'Mật khẩu không được để trống',
+            ]);
+
         if (Auth::attempt(['name' => $request->txtTenDangNhap, 'password' => $request->txtMatKhau])) {
-            session()->forget('error');
-            return redirect('admin/home');
+            return redirect('home');
         } else {
             return redirect('login')->with('error', 'Sai tên đăng nhập hoặc mật khẩu');
         }
@@ -191,6 +199,6 @@ class UserController extends Controller {
      */
     public function logout() {
         Auth::logout();
-        return redirect('login');
+        return redirect('home');
     }
 }

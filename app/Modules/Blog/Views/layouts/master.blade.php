@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>Blog tâm sự coder</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -52,18 +52,24 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Đăng Nhập</a></li>
-        <li><a href="#">Đăng Ký</a></li>
-        {{-- <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+      @if(!Auth::check())
+        <li><a href="login">Đăng Nhập</a></li>
+        <li><a href="register">Đăng Ký</a></li>
+      @else
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="admin/post/list">Quản lý bài viết</a></li>
+            @if(Auth::user()->quyen == 1)
+              <li><a href="admin/user/list">Quản lý thành viên</a></li>
+              <li><a href="admin/categories/list">Quản lý chuyên mục</a></li>
+            @endif
+            <li><a href="#">Thay đổi mật khẩu</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="logout">Đăng xuất</a></li>
           </ul>
-        </li> --}}
+        </li>
+      @endif
       </ul>
     
       <form class="navbar-form navbar-left">

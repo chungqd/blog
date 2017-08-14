@@ -20,10 +20,6 @@
 	            <a href="admin/categories/add" title="" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>  Add Categories</a> 
 	            <a href="admin/categories/list" title="" class="btn btn-primary">View All</a> 
 	            </div>
-	            <div class="col-md-9">
-	            	<button type="button" id="btnSearch" id="btnSearch" class="btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></button>
-	            	<input class="form-control pull-right" style="width: 300px;" type="text" name="txtSearch" id="txtSearch" placeholder="Nhập từ khóa" value="<?php //echo $keyword; ?>">
-	            </div>
 		           
 				<table class="table table-hover">
 					<thead>
@@ -57,13 +53,6 @@
 			window.location.href = "admin/categories/delete/"+id;
 		}
 	}
-
-	$(document).ready(function() {
-		$("#btnSearch").click(function(){
-			var keyword = $.trim($("#txtSearch").val());
-			window.location.href = "?sk=typebook&m=index&page=1&keyword="+keyword;
-		});
-	});
 </script>
 
 @endsection
