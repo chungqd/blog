@@ -11,6 +11,8 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
     Route::get('detail/{id}/{TenKhongDau}.html', 'HomeController@detail');
     Route::get('user', 'HomeController@getUser')->middleware('checklogin');
     Route::post('user', 'HomeController@postUser');
+
+    Route::get('user/{id}', 'HomeController@getPostUser');
     Route::get('register', 'HomeController@getRegister');
     Route::post('register', 'HomeController@postRegister');
 

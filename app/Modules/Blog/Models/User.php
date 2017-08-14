@@ -24,7 +24,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function postUser()
+    public function getPostByUser()
     {
         return $this->hasMany('App\Modules\Blog\Models\Post', 'user_id', 'id');
     }

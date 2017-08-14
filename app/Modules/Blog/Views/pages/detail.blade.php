@@ -22,7 +22,7 @@
 
                 <!-- Author -->
                 <p class="lead">
-                    by <a href="#">{{$user->name}}</a>
+                    by <a href="user/{{$user->id}}">{{$user->name}}</a>
                 </p>
                 
                 <!-- Preview Image -->

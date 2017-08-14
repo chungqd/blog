@@ -210,4 +210,19 @@ class HomeController extends Controller
         $posts = Post::where('tieude', 'like', "%$keyword%")->simplePaginate(5);
         return view('Blog::pages.search', ['posts'=>$posts, 'keyword' => $keyword]);
     }
+
+    /**
+     * get posts by user
+     * 
+     * @param  int $id
+     * @return view
+     */
+    public function getPostUser($id)
+    {
+        $user = User::find($id);
+        $posts = $user->getPostByUser()->simplePaginate(10);
+        // dd($posts);
+        return view('Blog::pages.postsByUser', ['posts'=>$posts, 'user'=>$user]);
+
+    }
 }
