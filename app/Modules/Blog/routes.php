@@ -1,7 +1,7 @@
 <?php 
 Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'], function () {
 
-    Route::get('login', "UserController@getLogin");
+    Route::get('login', "UserController@getLogin")->name('login');
     Route::post('login', "UserController@postLogin");
     Route::get('logout', "UserController@logout");
     Route::get('home', 'HomeController@index');
@@ -13,10 +13,12 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
     Route::post('user', 'HomeController@postUser');
 
     Route::get('user/{id}', 'HomeController@getPostUser');
-    Route::get('register', 'HomeController@getRegister');
+    Route::get('register', 'HomeController@getRegister')->name('register');
     Route::post('register', 'HomeController@postRegister');
 
     Route::post('search', 'HomeController@search');
+
+    Route::get('active/{id}/{authenKey}', 'HomeController@active');
 
 
     Route::group(['prefix' => 'admin' ,'middleware' => 'checklogin'], function (){

@@ -11,11 +11,11 @@ class Post extends Model
 
     public function categories()
     {
-    	return $this->belongsToMany('App\Modules\Blog\Models\Categories', 'post_cates', 'post_id', 'cate_id');
+        return $this->belongsToMany('App\Modules\Blog\Models\Categories', 'post_cates', 'post_id', 'cate_id');
     }
 
     public function users()
     {
-    	return $this->belongsTo('App\Modules\Blog\Models\User', 'user_id', 'id');
+        return $this->belongsTo('App\Modules\Blog\Models\User', 'user_id', 'id');
     }
 }

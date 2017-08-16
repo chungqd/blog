@@ -11,6 +11,8 @@ use App\Http\Requests;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
 {
@@ -162,6 +164,7 @@ class HomeController extends Controller
      */
     public function postRegister(Request $request)
     {
+//        echo ($request->_token); die();
         $messages = [
             'txtName.required'     => 'Bạn chưa nhập tên chuyên mục',
             'txtName.max'          => 'Tên chuyên mục phải có độ dài 3 - 100 kí tự',
@@ -193,9 +196,63 @@ class HomeController extends Controller
         $user->email    = $request->txtEmail;
         $user->password = bcrypt($request->txtPassword);
         $user->quyen    = 0;
+        $user->remember_token = $request->_token;
         $user->save();
 
-        return redirect('register')->with('thongbao', "Đăng ký thành công");
+        $idUser = encrypt($user->id);
+        $link = $idUser."/".$user->remember_token;
+        $data = ['name' => $request->txtName ,'link' => $link];
+        Mail::send('Blog::pages.mailActive', $data, function ($message) {
+            $message->from('php1608e@gmail.com', 'Blog');
+            $message->to(Input::get('txtEmail'))->subject('Kích hoạt tài khoản');
+        });
+        return redirect('register')->with('thongbao', "Vui lòng vào email để kích hoạt tài khoản");
+    }
+
+    public function active($id, $authenKey)
+    {
+        $idUser = decrypt($id);
+        $user = User::find($idUser);
+
+//        $data = array();
+        if (empty($user))
+        {
+            return view('Blog::pages.active', ['thongbao' => 'Mã kích hoạt không hợp lệ']);
+        }
+
+        if ($authenKey != $user->remember_token)
+        {
+            return view('Blog::pages.active', ['thongbao' => 'Mã kích hoạt không hợp lệ']);
+        }
+
+        $timeRegister = strtotime($user->created_at);
+        $timeLimit = strtotime('+30 minutes', $timeRegister);
+        $today = strtotime("now");
+        if($today > $timeLimit)
+        {
+            return view('Blog::pages.active', ['thongbao' => 'Mã kích hoạt đã hết hạn']);
+        }
+
+
+        if($user->status == 1)
+        {
+            return view('Blog::pages.active', ['thongbao' => 'Tài khoản đã được kích hoạt']);
+        }
+        else
+        {
+            DB::beginTransaction();
+            try {
+                $user->status = 1;
+                $user->save();
+                DB::commit();
+            } catch (Exception $ex) {
+                DB::rollback();
+                throw $ex;
+            }
+            return view('Blog::pages.active', ['thongbao' => "Kích hoạt tài khoản thành công"]);
+        }
+
+
     }
 
     /**
@@ -221,8 +278,6 @@ class HomeController extends Controller
     {
         $user = User::find($id);
         $posts = $user->getPostByUser()->simplePaginate(10);
-        // dd($posts);
         return view('Blog::pages.postsByUser', ['posts'=>$posts, 'user'=>$user]);
-
     }
 }

@@ -76,6 +76,7 @@ class CategoriController extends Controller
         $categories = Categories::find($id);
         if (empty($categories)) {
             return redirect('admin/categories/list')->with('mess', 'Không tồn tại thể loại cần sửa');
+            // return view('errors.403');
         } else {
             return view('Blog::admin.categories.editCategories', ['categories' => $categories]);
         }
