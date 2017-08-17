@@ -4,6 +4,7 @@ namespace App\Modules\Blog\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Modules\Blog\Models\User;
+use App\Modules\Blog\Models\Post;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,15 +46,15 @@ class UserController extends Controller {
             'txtEmail.unique'      => 'Đã tồn tại email',
             'txtEmail.email'       => 'Không đúng định dạng email',
             'txtPassword.required' => 'Trường mật khẩu không được để trống',
-            'txtPassword.min'      => 'Mật khẩu phải có độ dài từ 10 - 60 ký tự',
-            'txtPassword.max'      => 'Mật khẩu phải có độ dài từ 10 - 60 ký tự',
+            'txtPassword.min'      => 'Mật khẩu phải có độ dài từ 6 - 60 ký tự',
+            'txtPassword.max'      => 'Mật khẩu phải có độ dài từ 6 - 60 ký tự',
             're-password.required' => 'Trường nhập lại mật khẩu còn trống',
             're-password.same'     => 'Mật khẩu nhập lại không trùng',
         ];
         $rules = [
             'txtName'     => 'required|min:3|max:100',
             'txtEmail'    => 'required|unique:users,email|email',
-            'txtPassword' => 'required|min:1|max:60',
+            'txtPassword' => 'required|min:6|max:60',
             're-password' => 'required|same:txtPassword',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -123,13 +124,13 @@ class UserController extends Controller {
             $user->quyen = $request->slcRole;
             if ($request->changePass == 'on') {
                 $this->validate($request, [
-                        'txtPassword' => 'required|min:1|max:60',
+                        'txtPassword' => 'required|min:6|max:60',
                         're-password' => 'required|same:txtPassword',
                     ],
                     [
                         'txtPassword.required' => 'Trường mật khẩu không được để trống',
-                        'txtPassword.min'      => 'Mật khẩu phải có độ dài từ 10 - 60 ký tự',
-                        'txtPassword.max'      => 'Mật khẩu phải có độ dài từ 10 - 60 ký tự',
+                        'txtPassword.min'      => 'Mật khẩu phải có độ dài từ 6 - 60 ký tự',
+                        'txtPassword.max'      => 'Mật khẩu phải có độ dài từ 6 - 60 ký tự',
                         're-password.required' => 'Trường nhập lại mật khẩu còn trống',
                         're-password.same'     => 'Mật khẩu nhập lại không trùng',
                     ]);
@@ -156,9 +157,18 @@ class UserController extends Controller {
         if (empty($user)) {
             return redirect('admin/user/list')->with('mess', 'Không tồn tại thành viên cần xóa');
         }
+        $post = Post::where('user_id', $id)->count();
+        if ($post == 0) {
+            $user->delete();
+            return redirect('admin/user/list')->with('thongbao', "Xóa thành công");
+        } else {
+            echo "<script type='text/javascript'>
+                alert('Xin lỗi! Bạn phải xóa bài viết của thành viên trước');
+                window.location = '";
+                    echo route('ds_user');
+            echo "'</script>";
+        }
 
-        $user->delete();
-        return redirect('admin/user/list')->with('thongbao', "Xóa thành công");
     }
 
     /**
@@ -185,8 +195,10 @@ class UserController extends Controller {
                 'txtMatKhau.required' => 'Mật khẩu không được để trống',
             ]);
 
-        if (Auth::attempt(['name' => $request->txtTenDangNhap, 'password' => $request->txtMatKhau])) {
+        if (Auth::attempt(['name' => $request->txtTenDangNhap, 'password' => $request->txtMatKhau, 'status' => 1])) {
             return redirect('home');
+        } elseif (Auth::attempt(['name' => $request->txtTenDangNhap, 'password' => $request->txtMatKhau, 'status' => 0])) {
+            return redirect('login')->with('error', 'Tài khoản chưa được kích hoạt');
         } else {
             return redirect('login')->with('error', 'Sai tên đăng nhập hoặc mật khẩu');
         }

@@ -9,6 +9,7 @@ use App\Modules\Blog\Models\Categories;
 use App\Http\Requests;
 use App\Http\Requests\StoreBlogPostRequest;
 use DB;
+use App\Modules\Blog\Models\PostCate;
 
 
 class CategoriController extends Controller
@@ -143,9 +144,19 @@ class CategoriController extends Controller
         if (empty($categories)) {
             return redirect('admin/categories/list')->with('mess', 'Không tồn tại chuyên mục cần xóa');
         }
+        $post = PostCate::where('cate_id',$id)->count();
+        if ($post == 0) {
+            $categories->delete();
+            return redirect('admin/categories/list')->with('thongbao', "Xóa thành công");
+        } else {
+            echo "<script type='text/javascript'>
+                alert('Xin lỗi! Bạn phải xóa bài viết của chuyên mục này trước');
+                window.location = '";
+                    echo route('ds_category');
+            echo "'</script>";
+        }
 
-        $categories->delete();
-        return redirect('admin/categories/list')->with('thongbao', "Xóa thành công");
+        
     }
 
     /**

@@ -42,7 +42,7 @@ Route::group(['namespace' => 'App\Modules\Blog\Controllers', 'middleware'=>'web'
 
 
         Route::group(['prefix' => 'categories','middleware' => 'policies'], function() {
-            Route::get('list', 'CategoriController@index');
+            Route::get('list', 'CategoriController@index')->name('ds_category');
 
             Route::get('add', 'CategoriController@getAdd');
             Route::post('add', 'CategoriController@postAdd');

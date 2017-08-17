@@ -29,6 +29,7 @@
 <body>
 <p>Dear {{$name}},</p>
 <p>Vui lòng click vào link bên dưới kích hoạt tài khoản. Nếu bạn không đăng kí tài khoản tại Blog, chúng tôi xin lỗi vì đã làm phiền</p>
+<p>Link kích hoạt chỉ tồn tại trong 30 phút</p>
 {{ URL::to('active/' . $link) }}.<br/>
 <p>Xin cảm ơn!</p>
 </body>

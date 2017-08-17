@@ -164,7 +164,6 @@ class HomeController extends Controller
      */
     public function postRegister(Request $request)
     {
-//        echo ($request->_token); die();
         $messages = [
             'txtName.required'     => 'Bạn chưa nhập tên chuyên mục',
             'txtName.max'          => 'Tên chuyên mục phải có độ dài 3 - 100 kí tự',
@@ -173,15 +172,15 @@ class HomeController extends Controller
             'txtEmail.unique'      => 'Đã tồn tại email',
             'txtEmail.email'       => 'Không đúng định dạng email',
             'txtPassword.required' => 'Trường mật khẩu không được để trống',
-            'txtPassword.min'      => 'Mật khẩu phải có độ dài từ 10 - 60 ký tự',
-            'txtPassword.max'      => 'Mật khẩu phải có độ dài từ 10 - 60 ký tự',
+            'txtPassword.min'      => 'Mật khẩu phải có độ dài từ 6 - 60 ký tự',
+            'txtPassword.max'      => 'Mật khẩu phải có độ dài từ 6 - 60 ký tự',
             'passwordAgain.required' => 'Trường nhập lại mật khẩu còn trống',
             'passwordAgain.same'     => 'Mật khẩu nhập lại không trùng',
         ];
         $rules = [
             'txtName'     => 'required|min:3|max:100',
             'txtEmail'    => 'required|unique:users,email|email',
-            'txtPassword' => 'required|min:1|max:60',
+            'txtPassword' => 'required|min:6|max:60',
             'passwordAgain' => 'required|same:txtPassword',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
